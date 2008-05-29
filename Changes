@@ -1,4 +1,4 @@
 Revision history for Config-INI-MVP-Reader
 
-0.001     2008-05-29
+0.016     2008-05-29
           first version, refactored out of App::Addex::Config

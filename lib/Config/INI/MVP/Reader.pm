@@ -35,6 +35,36 @@ entry for C<y> in the Foo::Bar section will be an arrayref with two values.  If
 the list returned by C<multivalue_args> did not contain C<y>, then an exception
 would be raised while reading this section.
 
+To request a single plugin multiple times, the sections must be uniquely
+identifiable by their names.  A name can be given in this form:
+
+  [name / Package::Name]
+
+If no name is given, the package name is used as the name.
+
+The data returned is in the form:
+
+  [
+    {
+      '=package' => 'Some::Package',
+      '=name'    => 'plugin_moniker',
+      arg_1_val  => $value,
+      arg_N_val  => [ $val1, $val2, ... ],
+    },
+    ...
+  ]
+
+The unfortunate names C<=package> and C<=name> are used because they are
+illegal as property names.  The first datum may be the "root" section before
+any section header.  By default, it will have the name C<_> and no package.
+
+=head1 METHODS
+
+=head2 multivalue_args
+
+This method returns a list of property names which may have multiple entries in
+the root section.
+
 =cut
 
 sub new {
@@ -53,7 +83,7 @@ sub new {
 
 sub multivalue_args { }
 
-sub starting_section { q{=} }
+sub starting_section { q{_} }
 
 sub change_section {
   my ($self, $section) = @_;

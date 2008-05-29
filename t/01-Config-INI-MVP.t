@@ -10,9 +10,9 @@ require_ok( 'Config::INI::MVP::Reader' );
 my $have = Config::INI::MVP::Reader->read_file('eg/mvp.ini');
 my $want = [
   {
-    '=name' => '=',
-    'bar' => '11',
-    'foo' => '10',
+    '=name' => '_',
+    'bar'   => '11',
+    'foo'   => '10',
   },
   {
     '=name'    => 'Foo::Bar',
