@@ -118,8 +118,8 @@ sub change_section {
   eval "require $package; 1"
     or Carp::croak "couldn't load plugin $section given in config: $@";
 
-  if ($section->can('multivalue_args')) {
-    $self->{__PACKAGE__}{mva}{$package} = [ $section->multivalue_args ];
+  if ($package->can('multivalue_args')) {
+    $self->{__PACKAGE__}{mva}{$package} = [ $package->multivalue_args ];
   } else {
     $self->{__PACKAGE__}{mva}{$package} = [ ];
   }
