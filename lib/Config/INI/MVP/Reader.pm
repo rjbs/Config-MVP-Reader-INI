@@ -85,6 +85,8 @@ sub multivalue_args { }
 
 sub starting_section { q{_} }
 
+sub _expand_package { $_[1] }
+
 sub change_section {
   my ($self, $section) = @_;
 
@@ -93,6 +95,8 @@ sub change_section {
   
   Carp::croak qq{couldn't understand section header: "$section"}
     unless $package;
+
+  $package = $self->_expand_package($package);
 
   # Consider using Params::Util to validate class name.  -- rjbs, 2007-05-11
   Carp::croak "invalid package name '$package' in configuration"
