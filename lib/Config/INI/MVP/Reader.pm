@@ -131,7 +131,9 @@ sub set_value {
   my $sec_name = $self->current_section;
   my $section = $self->{__PACKAGE__}{plugin}{ $sec_name } ||= {};
 
-  my $mva = $self->{__PACKAGE__}{mva}{ $sec_name };
+  my $mva = $sec_name eq $self->starting_section
+          ? $self->{__PACKAGE__}{mva}{ $sec_name}
+          : $self->{__PACKAGE__}{mva}{ $section->{'=package'} };
 
   if (grep { $_ eq $name } @$mva) {
     $section->{$name} ||= [];
