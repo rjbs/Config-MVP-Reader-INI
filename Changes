@@ -1,5 +1,8 @@
 Revision history for Config-INI-MVP-Reader
 
+0.018     2008-06-07
+          reverse order of section name parts
+
 0.017     2008-06-03
           fix lookup of per-pkg multivalue names
           add some more private stubs for experimentation locally

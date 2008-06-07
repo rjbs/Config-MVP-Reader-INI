@@ -10,11 +10,11 @@ Config::INI::MVP::Reader - multi-value capable .ini file reader (for plugins)
 
 =head1 VERSION
 
-version 0.017
+version 0.018
 
 =cut
 
-our $VERSION = '0.017';
+our $VERSION = '0.018';
 
 =head1 DESCRIPTION
 
@@ -38,7 +38,7 @@ would be raised while reading this section.
 To request a single plugin multiple times, the sections must be uniquely
 identifiable by their names.  A name can be given in this form:
 
-  [name / Package::Name]
+  [Package::Name / name]
 
 If no name is given, the package name is used as the name.
 
@@ -90,8 +90,8 @@ sub _expand_package { $_[1] }
 sub change_section {
   my ($self, $section) = @_;
 
-  my ($name, $package) = $section =~ m{\A\s*(?:([^/\s]+)\s*/\s*)?(\S+)\z};
-  $name = $package unless defined $name and length $name;
+  my ($package, $name) = $section =~ m{\A\s*(?:([^/\s]+)\s*/\s*)?(\S+)\z};
+  $package = $name unless defined $package and length $package;
   
   Carp::croak qq{couldn't understand section header: "$section"}
     unless $package;
