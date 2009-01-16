@@ -1,5 +1,8 @@
 Revision history for Config-INI-MVP-Reader
 
+0.019     2009-01-16
+          add repo to metadata
+
 0.018     2008-06-07
           reverse order of section name parts
 
