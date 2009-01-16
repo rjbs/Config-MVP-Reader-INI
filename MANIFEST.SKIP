@@ -31,3 +31,4 @@
 \.swp$
 \.bak$
 ^pod.*\.tmp$
+^Config-INI-MVP
