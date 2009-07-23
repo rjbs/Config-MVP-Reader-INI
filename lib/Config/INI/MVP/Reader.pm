@@ -2,7 +2,9 @@ use strict;
 use warnings;
 
 package Config::INI::MVP::Reader;
-use base qw(Config::MVP Config::INI::Reader);
+use base qw(Config::INI::Reader);
+
+use Config::MVP::Assembler;
 
 =head1 NAME
 
@@ -10,11 +12,11 @@ Config::INI::MVP::Reader - multi-value capable .ini file reader (for plugins)
 
 =head1 VERSION
 
-version 0.020
+version 0.021
 
 =cut
 
-our $VERSION = '0.020';
+our $VERSION = '0.021';
 
 =head1 DESCRIPTION
 
@@ -62,32 +64,52 @@ any section header.  By default, it will have the name C<_> and no package.
 
 =cut
 
+sub _mvp { $_[0]->{'Config::INI::MVP::Reader'}{mvp} }
+
+sub multivalue_args { [] }
+
+sub new {
+  my ($class) = @_;
+  my $self = $class->SUPER::new;
+
+  $self->{'Config::INI::MVP::Reader'}{mvp} = Config::MVP::Assembler->new({
+    starting_section_multivalue_args => $self->multivalue_args,
+  });
+
+  return $self;
+}
+
 sub change_section {
-  my ($self) = @_;
+  my ($self, $section) = @_;
 
-  my ($package, $name);
-
-  if (@_ == 3) {
-    ($package, $name) = (@_[1,2]);
-  } elsif (@_ == 2) {
-    ($package, $name) = $_[1] =~ m{\A\s*(?:([^/\s]+)\s*/\s*)?(\S+)\z};
-    $package = $name unless defined $package and length $package;
+  my ($package, $name) = $section =~ m{\A\s*(?:([^/\s]+)\s*/\s*)?(\S+)\z};
+  $package = $name unless defined $package and length $package;
     
-    Carp::croak qq{couldn't understand section header: "$_[1]"}
-      unless $package;
-  } else {
-    Carp::croak q{invalid arguments passed to change_section};
-  }
+  Carp::croak qq{couldn't understand section header: "$_[1]"}
+    unless $package;
 
-  $self->SUPER::change_section($package, $name);
+  $self->_mvp->change_section($package, $name);
 }
 
 sub finalize {
   my ($self) = @_;
 
-  my $data = $self->SUPER::finalize;
+  my @sections;
 
-  $self->{data} = $data;
+  for my $section ($self->_mvp->sequence->sections) {
+    push @sections, {
+      %{ $section->payload },
+      '=name' => $section->name,
+      ($section->package ? ('=package' => $section->package) : ()),
+    };
+  }
+
+  $self->{data} = \@sections;
+}
+
+sub set_value {
+  my ($self, $name, $value) = @_;
+  $self->_mvp->set_value($name, $value);
 }
 
 =head1 AUTHOR
