@@ -12,11 +12,11 @@ Config::INI::MVP::Reader - multi-value capable .ini file reader (for plugins)
 
 =head1 VERSION
 
-version 0.021
+version 0.022
 
 =cut
 
-our $VERSION = '0.021';
+our $VERSION = '0.022';
 
 =head1 DESCRIPTION
 
@@ -64,15 +64,18 @@ any section header.  By default, it will have the name C<_> and no package.
 
 =cut
 
-sub _mvp { $_[0]->{'Config::INI::MVP::Reader'}{mvp} }
+sub mvp { $_[0]->{'Config::INI::MVP::Reader'}{mvp} }
 
 sub multivalue_args { [] }
 
 sub new {
-  my ($class) = @_;
+  my ($class, $arg) = @_;
   my $self = $class->SUPER::new;
 
-  $self->{'Config::INI::MVP::Reader'}{mvp} = Config::MVP::Assembler->new({
+  $arg ||= {};
+  my $assembler_class = $arg->{assembler_class} || 'Config::MVP::Assembler';
+
+  $self->{'Config::INI::MVP::Reader'}{mvp} = $assembler_class->new({
     starting_section_multivalue_args => $self->multivalue_args,
   });
 
@@ -88,7 +91,7 @@ sub change_section {
   Carp::croak qq{couldn't understand section header: "$_[1]"}
     unless $package;
 
-  $self->_mvp->change_section($package, $name);
+  $self->mvp->change_section($package, $name);
 }
 
 sub finalize {
@@ -96,7 +99,7 @@ sub finalize {
 
   my @sections;
 
-  for my $section ($self->_mvp->sequence->sections) {
+  for my $section ($self->mvp->sequence->sections) {
     push @sections, {
       %{ $section->payload },
       '=name' => $section->name,
@@ -109,7 +112,7 @@ sub finalize {
 
 sub set_value {
   my ($self, $name, $value) = @_;
-  $self->_mvp->set_value($name, $value);
+  $self->mvp->set_value($name, $value);
 }
 
 =head1 AUTHOR

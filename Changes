@@ -1,6 +1,10 @@
 Revision history for Config-INI-MVP-Reader
 
-0.020     2009-07-23
+0.022     2009-07-23
+          make the MVP object public
+          allow alternate assembler class to be passed in
+
+0.021     2009-07-23
           refactor MVP bits into Config::MVP
 
 0.019     2009-01-16
