@@ -129,7 +129,7 @@ sub finalize {
 
 sub set_value {
   my ($self, $name, $value) = @_;
-  $self->assembler->set_value($name, $value);
+  $self->assembler->add_value($name, $value);
 }
 
 =head1 AUTHOR
