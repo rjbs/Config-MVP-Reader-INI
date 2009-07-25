@@ -32,11 +32,11 @@ following file:
   y = 3
 
 MVP will, upon reaching this section, load Foo::Bar and call a method (by
-default C<multivalue_args>) on it, to determine which property names may have
-multiple entries.  If the return value of that method includes C<y>, then the
-entry for C<y> in the Foo::Bar section will be an arrayref with two values.  If
-the list returned by C<multivalue_args> did not contain C<y>, then an exception
-would be raised while reading this section.
+default C<mvp_multivalue_args>) on it, to determine which property names may
+have multiple entries.  If the return value of that method includes C<y>, then
+the entry for C<y> in the Foo::Bar section will be an arrayref with two values.
+If the list returned by C<multivalue_args> did not contain C<y>, then an
+exception would be raised while reading this section.
 
 To request a single plugin multiple times, the sections must be uniquely
 identifiable by their names.  A name can be given in this form:
