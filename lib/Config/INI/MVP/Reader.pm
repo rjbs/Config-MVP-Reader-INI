@@ -1,8 +1,9 @@
-use strict;
-use warnings;
-
 package Config::INI::MVP::Reader;
-use base qw(Config::INI::Reader);
+use Moose;
+
+use Config::INI::Reader;
+BEGIN { our @ISA; push @ISA, 'Config::INI::Reader' }
+sub new { goto &Moose::Object::new }
 
 use Config::MVP::Assembler;
 
@@ -64,23 +65,39 @@ any section header.  By default, it will have the name C<_> and no package.
 
 =cut
 
-sub mvp { $_[0]->{'Config::INI::MVP::Reader'}{mvp} }
+has assembler => (
+  is   => 'ro',
+  isa  => 'Config::MVP::Assembler',
+  default => sub {
+    my ($self) = @_;
+    my $assembler = $self->assembler_class->new;
 
-sub multivalue_args { [] }
+    my $starting_section = $assembler->section_class->new({
+      name    => $self->starting_section_name,
+      aliases => $self->starting_section_aliases,
+      multivalue_args => $self->starting_section_multivalue_args,
+    });
 
-sub new {
-  my ($class, $arg) = @_;
-  my $self = $class->SUPER::new;
+    $assembler->sequence->add_section($starting_section);
 
-  $arg ||= {};
-  my $assembler_class = $arg->{assembler_class} || 'Config::MVP::Assembler';
+    return $assembler;
+  },
+);
 
-  $self->{'Config::INI::MVP::Reader'}{mvp} = $assembler_class->new({
-    starting_section_multivalue_args => $self->multivalue_args,
-  });
+has assembler_class => (
+  is   => 'ro',
+  isa  => 'ClassName',
+  lazy => 1,
+  builder => 'default_assembler_class',
+);
 
-  return $self;
-}
+sub default_assembler_class { 'Config::MVP::Assembler' }
+
+# XXX: These should be attributes with builders and blah blah blah, but I just
+# can't be bothered. -- rjbs, 2009-07-24
+sub starting_section_name    { $_[0]->starting_section }
+sub starting_section_aliases { {} }
+sub starting_section_multivalue_args { [] }
 
 sub change_section {
   my ($self, $section) = @_;
@@ -91,7 +108,7 @@ sub change_section {
   Carp::croak qq{couldn't understand section header: "$_[1]"}
     unless $package;
 
-  $self->mvp->change_section($package, $name);
+  $self->assembler->change_section($package, $name);
 }
 
 sub finalize {
@@ -99,7 +116,7 @@ sub finalize {
 
   my @sections;
 
-  for my $section ($self->mvp->sequence->sections) {
+  for my $section ($self->assembler->sequence->sections) {
     push @sections, {
       %{ $section->payload },
       '=name' => $section->name,
@@ -112,7 +129,7 @@ sub finalize {
 
 sub set_value {
   my ($self, $name, $value) = @_;
-  $self->mvp->set_value($name, $value);
+  $self->assembler->set_value($name, $value);
 }
 
 =head1 AUTHOR
