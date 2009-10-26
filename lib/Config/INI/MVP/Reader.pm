@@ -114,6 +114,8 @@ sub change_section {
 sub finalize {
   my ($self) = @_;
 
+  $self->assembler->end_section if $self->assembler->current_section;
+
   my @sections;
 
   for my $section ($self->assembler->sequence->sections) {
