@@ -13,11 +13,11 @@ Config::INI::MVP::Reader - multi-value capable .ini file reader (for plugins)
 
 =head1 VERSION
 
-version 0.023
+version 0.024
 
 =cut
 
-our $VERSION = '0.023';
+our $VERSION = '0.024';
 
 =head1 DESCRIPTION
 

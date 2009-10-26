@@ -7,6 +7,14 @@ with 'Config::MVP::Reader::Findable';
 
 use Config::INI::MVP::Reader;
 
+=head1 VERSION
+
+version 0.024
+
+=cut
+
+our $VERSION = '0.024';
+
 =head1 DESCRIPTION
 
 Config::MVP::Reader::INI reads F<.ini> files containing MVP-style
