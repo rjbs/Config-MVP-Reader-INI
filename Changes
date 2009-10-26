@@ -1,5 +1,8 @@
 Revision history for Config-INI-MVP-Reader
 
+0.024     2009-10-26
+          include Config::MVP::Reader class with an unfortunate name
+
 0.023     2009-07-26
           bump moose version in response to
           http://www.nntp.perl.org/group/perl.cpan.testers/2009/07/msg4777153.html
