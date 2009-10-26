@@ -8,11 +8,11 @@ with 'Config::MVP::Reader::Findable';
 use Config::INI::MVP::Reader;
 
 =head1 DESCRIPTION
-    
+
 Config::MVP::Reader::INI reads F<.ini> files containing MVP-style
 configuration.  It uses L<Config::INI::MVP::Reader> to do most of the heavy
 lifting.
-    
+
 =cut
 
 # Clearly this should be an attribute with a builder blah blah blah. -- rjbs,
