@@ -28,8 +28,7 @@ sub read_into_assembler {
 {
   package
    Config::MVP::Reader::INI::INIReader;
-  use Config::INI::Reader;
-  BEGIN { our @ISA; push @ISA, 'Config::INI::Reader' }
+  use base 'Config::INI::Reader';
 
   sub new {
     my ($class, $assembler) = @_;
@@ -59,6 +58,17 @@ sub read_into_assembler {
 
   sub set_value {
     my ($self, $name, $value) = @_;
+    unless ($self->assembler->current_section) {
+      my $starting_name = $self->starting_section;
+
+      if ($self->assembler->sequence->section_named( $starting_name )) {
+        Carp::croak q{can't set value outside of section once starting }
+                  . q{section exists};
+      }
+
+      $self->assembler->change_section(\undef, $starting_name);
+    }
+
     $self->assembler->add_value($name, $value);
   }
 }
