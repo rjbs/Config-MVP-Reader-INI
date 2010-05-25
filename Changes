@@ -1,4 +1,12 @@
-Revision history for Config-INI-MVP-Reader
+Revision history for {{$dist->name}}
+
+{{$NEXT}}
+          [BREAKS BACKWARD COMPATIBILITY]
+
+          now implements the new Reader interface from Config::MVP v1
+
+          Config::INI::MVP::Reader has been removed; it will either be put in
+          its own dist or allowed to fade away
 
 0.024     2009-10-26
           include Config::MVP::Reader class with an unfortunate name

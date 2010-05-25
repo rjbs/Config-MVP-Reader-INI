@@ -33,7 +33,7 @@ is_deeply(
 );
 
 is($seq->section_named('baz')->package, 'Foo::Bar', 'baz package');
-  
+
 is_deeply(
   $seq->section_named('baz')->payload,
   { x => 1 },
