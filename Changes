@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+1.101450  2010-05-25 18:16:05 America/New_York
           [BREAKS BACKWARD COMPATIBILITY]
 
           now implements the new Reader interface from Config::MVP v1
