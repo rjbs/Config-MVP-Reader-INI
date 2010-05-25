@@ -1,24 +1,14 @@
 package Config::MVP::Reader::INI;
 use Moose;
 with 'Config::MVP::Reader::Findable::ByExtension';
-
 # ABSTRACT: an MVP config reader for .ini files
 
-use Config::INI::MVP::Reader;
-
-=head1 VERSION
-
-version 0.024
-
-=cut
-
-our $VERSION = '0.024';
+use Config::MVP 0.101440; # new reader interface
 
 =head1 DESCRIPTION
 
 Config::MVP::Reader::INI reads F<.ini> files containing MVP-style
-configuration.  It uses L<Config::INI::MVP::Reader> to do most of the heavy
-lifting.
+configuration.
 
 =cut
 
@@ -64,7 +54,6 @@ sub read_into_assembler {
 
   sub finalize {
     my ($self) = @_;
-
     $self->assembler->finalize;
   }
 
@@ -73,30 +62,6 @@ sub read_into_assembler {
     $self->assembler->add_value($name, $value);
   }
 }
-
-=head1 AUTHOR
-
-Ricardo SIGNES, C<< <rjbs@cpan.org> >>
-
-=head1 BUGS
-
-Please report any bugs or feature requests through the web interface at
-L<http://rt.cpan.org>.  I will be notified, and then you'll automatically be
-notified of progress on your bug as I make changes.
-
-=head1 COPYRIGHT
-
-Copyright 2008 Ricardo SIGNES, all rights reserved.
-
-This program is free software; you may redistribute it and/or modify it
-under the same terms as Perl itself.
-
-=cut
-
-1;
-
-1;
-
 
 no Moose;
 __PACKAGE__->meta->make_immutable;
