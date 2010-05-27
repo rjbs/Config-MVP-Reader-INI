@@ -1,9 +1,10 @@
 package Config::MVP::Reader::INI;
 use Moose;
+extends 'Config::MVP::Reader';
 with 'Config::MVP::Reader::Findable::ByExtension';
 # ABSTRACT: an MVP config reader for .ini files
 
-use Config::MVP 0.101440; # new reader interface
+use Config::MVP 2; # Reader is a base class
 
 =head1 DESCRIPTION
 
