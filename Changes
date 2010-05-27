@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+2.101460  2010-05-26 22:30:18 America/New_York
           now implements the new Reader interface from Config::MVP v2
 
 1.101460  2010-05-26 08:30:54 America/New_York
