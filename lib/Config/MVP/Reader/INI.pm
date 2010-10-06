@@ -43,7 +43,7 @@ sub read_into_assembler {
   sub change_section {
     my ($self, $section) = @_;
 
-    my ($package, $name) = $section =~ m{\A\s*(?:([^/\s]+)\s*/\s*)?(\S+)\z};
+    my ($package, $name) = $section =~ m{\A\s*(?:([^/\s]+)\s*/\s*)?(.+)\z};
     $package = $name unless defined $package and length $package;
 
     Carp::croak qq{couldn't understand section header: "$_[1]"}
