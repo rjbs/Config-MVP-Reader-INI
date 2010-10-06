@@ -12,7 +12,7 @@ my @section_names = $seq->section_names;
 
 is_deeply(
   \@section_names,
-  [ qw(_ Foo::Bar baz) ],
+  [ qw(_ Foo::Bar baz), 'Bap Bop Boop' ],
   "loaded the right names from sample config",
 );
 
@@ -38,6 +38,14 @@ is_deeply(
   $seq->section_named('baz')->payload,
   { x => 1 },
   'baz payload',
+);
+
+is($seq->section_named('Bap Bop Boop')->package, 'Foo::Bar', 'Bap Bop Boop package');
+
+is_deeply(
+  $seq->section_named('Bap Bop Boop')->payload,
+  { yarp => 1 },
+  'Bap Bop Boop payload',
 );
 
 done_testing;
