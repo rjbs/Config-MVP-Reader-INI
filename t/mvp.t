@@ -12,7 +12,7 @@ my @section_names = $seq->section_names;
 
 is_deeply(
   \@section_names,
-  [ qw(_ Foo::Bar baz), 'Bap Bop Boop' ],
+  [ qw(_ Foo::Bar baz), 'Bap Bop Boop', 'Bap Bop Blort' ],
   "loaded the right names from sample config",
 );
 
