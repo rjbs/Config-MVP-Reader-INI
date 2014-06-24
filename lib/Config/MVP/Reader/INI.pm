@@ -29,7 +29,7 @@ sub read_into_assembler {
 {
   package
    Config::MVP::Reader::INI::INIReader;
-  use base 'Config::INI::Reader';
+  use parent 'Config::INI::Reader';
 
   sub new {
     my ($class, $assembler) = @_;
