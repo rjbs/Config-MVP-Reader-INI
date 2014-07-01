@@ -1,6 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+          replace base with parent
 
 2.101462  2013-07-01 22:00:07 America/New_York
           repackage, fix bugtracker, repo data, etc
