@@ -1,6 +1,8 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+        - update author contact info
+        - document perl version policy
 
 2.101463  2014-06-30 21:43:49-04:00 America/New_York
           replace base with parent
